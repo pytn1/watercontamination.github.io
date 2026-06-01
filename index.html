@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Water Contamination — Ecological Crisis Project</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,600;0,700;1,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#0b1e35;--blue:#1565a8;--teal:#0c9b7c;--teal2:#0a7d63;
+  --cream:#f5f2ed;--warm:#fdfcfa;--text:#18202c;--muted:#5c6472;
+  --orange:#e05c2e;--red:#c0392b;--gold:#d4a017;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Outfit',sans-serif;background:var(--warm);color:var(--text);overflow-x:hidden;line-height:1.7}
+
+/* ── TOP BANNER ── */
+.top-banner{
+  background:#07111e;padding:10px 5%;
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;
+}
+.top-banner-label{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.3);font-weight:500}
+.top-banner-links{display:flex;gap:6px;flex-wrap:wrap}
+.top-banner-links a{
+  font-size:11px;padding:4px 12px;border-radius:2px;
+  text-decoration:none;font-weight:400;letter-spacing:.06em;
+  background:rgba(255,255,255,.06);color:rgba(255,255,255,.5);
+  border:1px solid rgba(255,255,255,.08);transition:all .2s;
+}
+.top-banner-links a:hover{background:rgba(12,155,124,.15);color:var(--teal);border-color:rgba(12,155,124,.3)}
+.top-banner-links a.active{background:rgba(12,155,124,.18);color:var(--teal);border-color:rgba(12,155,124,.4)}
+
+/* ── NAV ── */
+nav{
+  position:sticky;top:0;z-index:200;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 5%;height:52px;
+  background:rgba(11,30,53,.94);backdrop-filter:blur(12px);
+  border-bottom:1px solid rgba(255,255,255,.07);
+}
+.nav-logo{font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:600;color:rgba(255,255,255,.9);text-decoration:none}
+.nav-links{display:flex;gap:24px;list-style:none}
+.nav-links a{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.5);text-decoration:none;transition:color .2s}
+.nav-links a:hover{color:var(--teal)}
+
+/* ── HERO ── */
+.hero{position:relative;height:100vh;min-height:580px;display:flex;align-items:flex-end;overflow:hidden}
+.hero-bg{
+  position:absolute;inset:0;
+  background-image:url('https://images.unsplash.com/photo-1541675154750-0444c7d51e8e?w=1800&q=80');
+  background-size:cover;background-position:center 40%;
+  transform:scale(1.07);transition:transform 9s ease-out;
+}
+.hero-bg.loaded{transform:scale(1)}
+.hero-ov{position:absolute;inset:0;background:linear-gradient(to top,rgba(7,17,30,.97) 0%,rgba(7,17,30,.55) 50%,rgba(7,17,30,.2) 100%)}
+.hero-content{position:relative;z-index:2;padding:0 5% 72px;max-width:860px}
+.hero-eyebrow{
+  display:inline-flex;align-items:center;gap:10px;margin-bottom:16px;
+  font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--teal);font-weight:500;
+}
+.hero-eyebrow::before{content:'';width:24px;height:1px;background:var(--teal)}
+.hero-byline{font-size:11px;color:rgba(255,255,255,.28);letter-spacing:.1em;text-transform:uppercase;margin-bottom:20px;font-weight:300}
+h1{font-family:'Cormorant Garamond',serif;font-size:clamp(3rem,6.5vw,5.8rem);font-weight:300;line-height:1.05;color:#fff;margin-bottom:20px}
+h1 strong{font-weight:700;font-style:italic}
+.hero-sub{font-size:16px;color:rgba(255,255,255,.55);font-weight:300;max-width:520px;line-height:1.8;margin-bottom:40px}
+.hero-stats{display:flex;border-top:1px solid rgba(255,255,255,.1);padding-top:28px;gap:0}
+.hstat{flex:1;padding-right:28px;border-right:1px solid rgba(255,255,255,.08);margin-right:28px}
+.hstat:last-child{border-right:none;margin-right:0;padding-right:0}
+.hstat-n{font-family:'Cormorant Garamond',serif;font-size:2.6rem;font-weight:600;color:#fff;line-height:1;margin-bottom:4px}
+.hstat-n sup{font-size:1.3rem;color:var(--teal)}
+.hstat-l{font-size:11px;color:rgba(255,255,255,.35);line-height:1.5;font-weight:300}
+.hstat-src{font-size:9px;color:rgba(255,255,255,.18);letter-spacing:.06em;text-transform:uppercase;display:block;margin-top:4px}
+.hero-img-credit{position:absolute;bottom:10px;right:14px;z-index:3;font-size:9px;color:rgba(255,255,255,.22);letter-spacing:.06em}
+.hero-img-credit a{color:rgba(255,255,255,.3);text-decoration:none}
+
+/* ── SHARED ── */
+.section{padding:96px 5%}
+.sl{display:inline-flex;align-items:center;gap:10px;font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--teal);font-weight:500;margin-bottom:16px}
+.sl::before{content:'';width:22px;height:1px;background:var(--teal)}
+h2{font-family:'Cormorant Garamond',serif;font-size:clamp(1.9rem,3.5vw,2.8rem);font-weight:600;line-height:1.2;margin-bottom:18px}
+.intro{font-size:16px;color:var(--muted);font-weight:300;max-width:600px;line-height:1.85;margin-bottom:52px}
+
+/* ── REVEAL ── */
+.rv{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease}
+.rv.on{opacity:1;transform:none}
+.rl{opacity:0;transform:translateX(-36px);transition:opacity .75s ease,transform .75s ease}
+.rl.on{opacity:1;transform:none}
+.rr{opacity:0;transform:translateX(36px);transition:opacity .75s ease,transform .75s ease}
+.rr.on{opacity:1;transform:none}
+.d1{transition-delay:.1s}.d2{transition-delay:.22s}.d3{transition-delay:.34s}.d4{transition-delay:.46s}
+
+/* ── PARALLAX BAND ── */
+.pband{position:relative;height:52vh;min-height:280px;overflow:hidden}
+.pband-inner{position:absolute;inset:-18%;background-size:cover;background-position:center;will-change:transform}
+.pband-ov{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:14px}
+.pband-quote{
+  font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:300;
+  font-size:clamp(1.5rem,3.5vw,2.5rem);color:#fff;text-align:center;
+  max-width:680px;padding:0 5%;text-shadow:0 2px 20px rgba(0,0,0,.5);line-height:1.35;
+}
+.pband-attr{font-size:10px;color:rgba(255,255,255,.35);letter-spacing:.12em;text-transform:uppercase;text-align:center}
+.pband-imgcredit{position:absolute;bottom:8px;right:12px;font-size:9px;color:rgba(255,255,255,.2)}
+.pband-imgcredit a{color:rgba(255,255,255,.25);text-decoration:none}
+
+/* ── STAT GRID (big numbers) ── */
+.bigstat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:3px;margin-bottom:3px}
+.bigstat{background:var(--navy);padding:32px 28px}
+.bigstat:first-child{border-radius:4px 0 0 0}
+.bigstat:last-child{border-radius:0 4px 0 0}
+.bigstat-n{font-family:'Cormorant Garamond',serif;font-size:3rem;font-weight:600;color:var(--teal);line-height:1;margin-bottom:8px}
+.bigstat-l{font-size:13px;color:rgba(255,255,255,.55);line-height:1.5;font-weight:300}
+.bigstat-s{font-size:9px;color:rgba(255,255,255,.2);text-transform:uppercase;letter-spacing:.06em;display:block;margin-top:6px}
+.bigstat-wide{background:var(--navy);padding:22px 28px;border-radius:0 0 4px 4px;display:flex;align-items:center;gap:12px}
+.bigstat-wide-n{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:600;color:var(--orange)}
+.bigstat-wide-l{font-size:13px;color:rgba(255,255,255,.5);font-weight:300}
+
+/* ── IMAGE MOSAIC ── */
+.mosaic{display:grid;grid-template-columns:1fr 1fr;gap:3px}
+.mtile{position:relative;overflow:hidden}
+.mtile img{width:100%;height:100%;object-fit:cover;display:block;filter:brightness(.55) saturate(.8);transition:filter .6s,transform .6s}
+.mtile:hover img{filter:brightness(.7) saturate(.95);transform:scale(1.04)}
+.mtile-body{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:28px 24px;background:linear-gradient(to top,rgba(7,17,30,.92) 0%,transparent 55%)}
+.mtile-num{font-family:'Cormorant Garamond',serif;font-size:2.8rem;font-weight:300;color:rgba(255,255,255,.12);line-height:1;margin-bottom:6px}
+.mtile-title{font-family:'Cormorant Garamond',serif;font-size:1.35rem;font-weight:600;color:#fff;margin-bottom:8px;line-height:1.2}
+.mtile-desc{font-size:13px;color:rgba(255,255,255,.55);font-weight:300;line-height:1.6}
+.mtile-credit{position:absolute;top:10px;right:10px;font-size:9px;color:rgba(255,255,255,.22);background:rgba(0,0,0,.3);padding:3px 7px;border-radius:2px}
+.mtile-credit a{color:rgba(255,255,255,.3);text-decoration:none}
+.mtile.tall{height:480px}
+.mtile.med{height:300px}
+
+/* ── SVG INFOGRAPHIC SHARED ── */
+.chart-wrap{background:#fff;border:1px solid #e8e4de;border-radius:6px;padding:28px 24px;margin-bottom:24px}
+.chart-title{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:20px;font-weight:500}
+.chart-source{font-size:10px;color:#bbb;margin-top:12px;font-style:italic}
+
+/* ── DONUT ── */
+.donut-wrap{display:flex;align-items:center;gap:32px;flex-wrap:wrap}
+.donut-legend{display:flex;flex-direction:column;gap:10px}
+.legend-row{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--text);font-weight:400}
+.legend-swatch{width:12px;height:12px;border-radius:3px;flex-shrink:0}
+
+/* ── HORIZONTAL BARS ── */
+.hbar-row{display:grid;grid-template-columns:90px 1fr 48px;align-items:center;gap:12px;margin-bottom:14px}
+.hbar-label{font-size:12px;color:var(--muted);text-align:right;font-weight:400}
+.hbar-track-wrap{display:flex;flex-direction:column;gap:5px}
+.hbar-track{height:9px;background:#e8e4de;border-radius:5px;overflow:hidden}
+.hbar-fill{height:100%;border-radius:5px;width:0;transition:width 1.4s cubic-bezier(.25,1,.5,1)}
+.hbar-fill.u{background:var(--blue)}
+.hbar-fill.r{background:var(--teal)}
+.hbar-pcts{display:flex;flex-direction:column;gap:5px}
+.hbar-pct{font-size:12px;font-weight:500;line-height:1}
+.hbar-leg{display:flex;gap:18px;margin-top:14px}
+.hleg{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--muted)}
+.hleg-dot{width:9px;height:9px;border-radius:50%}
+
+/* ── BUBBLE / ICON INFOGRAPHIC ── */
+.icon-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:3px}
+.icon-card{background:var(--navy);padding:28px 20px;text-align:center}
+.icon-card:first-child{border-radius:4px 0 0 4px}
+.icon-card:last-child{border-radius:0 4px 4px 0}
+.icon-svg{width:40px;height:40px;margin:0 auto 14px}
+.icon-card-n{font-family:'Cormorant Garamond',serif;font-size:1.9rem;font-weight:600;color:#fff;line-height:1;margin-bottom:6px}
+.icon-card-l{font-size:12px;color:rgba(255,255,255,.45);line-height:1.5;font-weight:300}
+
+/* ── TWO COL ── */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start}
+
+/* ── SOLUTIONS CARDS ── */
+.sol-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:3px}
+.sol-card{position:relative;overflow:hidden;height:440px}
+.sol-card img{width:100%;height:100%;object-fit:cover;display:block;filter:brightness(.45) saturate(.7);transition:filter .6s,transform .6s}
+.sol-card:hover img{filter:brightness(.6);transform:scale(1.04)}
+.sol-body{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:32px 24px;background:linear-gradient(to top,rgba(7,17,30,.95) 0%,rgba(7,17,30,.25) 60%,transparent 100%)}
+.sol-n{font-family:'Cormorant Garamond',serif;font-size:3.5rem;font-weight:300;color:rgba(255,255,255,.1);line-height:1;margin-bottom:8px}
+.sol-title{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:600;color:#fff;margin-bottom:8px;line-height:1.2}
+.sol-desc{font-size:13px;color:rgba(255,255,255,.55);font-weight:300;line-height:1.6}
+.sol-tag{display:inline-block;margin-top:14px;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);border:1px solid rgba(12,155,124,.35);padding:3px 10px;border-radius:2px}
+.sol-credit{position:absolute;top:10px;right:10px;font-size:9px;color:rgba(255,255,255,.2);background:rgba(0,0,0,.3);padding:3px 7px;border-radius:2px}
+.sol-credit a{color:rgba(255,255,255,.28);text-decoration:none}
+
+/* ── CLOSING ── */
+.closing{position:relative;height:65vh;min-height:380px;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.closing-inner{position:absolute;inset:-18%;background-size:cover;background-position:center;will-change:transform}
+.closing-ov{position:absolute;inset:0;background:rgba(7,17,30,.72);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:5%}
+.closing-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,5vw,3.8rem);font-weight:300;color:#fff;line-height:1.2;margin-bottom:16px;max-width:700px}
+.closing-title em{font-style:italic;color:var(--teal)}
+.closing-sub{font-size:15px;color:rgba(255,255,255,.45);max-width:500px;margin-bottom:36px;font-weight:300;line-height:1.8}
+.btn-row{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
+.btn-p{background:var(--teal);color:#fff;text-decoration:none;padding:12px 28px;border-radius:3px;font-size:12px;font-weight:500;letter-spacing:.06em;transition:background .2s}
+.btn-p:hover{background:var(--teal2)}
+.btn-s{border:1px solid rgba(255,255,255,.22);color:rgba(255,255,255,.6);text-decoration:none;padding:12px 28px;border-radius:3px;font-size:12px;font-weight:400;letter-spacing:.06em;transition:all .2s}
+.btn-s:hover{border-color:rgba(255,255,255,.5);color:#fff}
+.closing-credit{position:absolute;bottom:8px;right:12px;font-size:9px;color:rgba(255,255,255,.18)}
+.closing-credit a{color:rgba(255,255,255,.22);text-decoration:none}
+
+/* ── WORKS CITED ── */
+.wc-section{background:var(--cream);padding:80px 5%}
+.wc-list{max-width:860px;list-style:none;display:flex;flex-direction:column;gap:16px;margin-top:32px}
+.wc-list li{font-size:13.5px;color:#3a3f4c;line-height:1.85;font-weight:300;padding-left:2.2em;text-indent:-2.2em}
+.wc-list a{color:var(--teal);text-decoration:none}
+.wc-list a:hover{text-decoration:underline}
+.wc-sub{font-size:12px;color:var(--muted);margin-bottom:28px;font-style:italic;font-weight:300;max-width:640px;line-height:1.8}
+
+/* ── FOOTER ── */
+footer{background:#07111e;padding:44px 5%;display:grid;grid-template-columns:1fr 1fr;gap:48px;border-top:1px solid rgba(255,255,255,.05)}
+.ft-brand p{font-size:12px;color:rgba(255,255,255,.2);line-height:1.7;font-weight:300;margin-top:10px;max-width:300px}
+.ft-links h4{font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:rgba(255,255,255,.25);margin-bottom:12px;font-weight:500}
+.ft-links ul{list-style:none;display:flex;flex-direction:column;gap:6px}
+.ft-links li{font-size:12px;color:rgba(255,255,255,.18);font-weight:300}
+.ft-links a{color:rgba(12,155,124,.5);text-decoration:none}
+.ft-links a:hover{color:var(--teal)}
+
+@media(max-width:800px){
+  .bigstat-grid,.icon-grid,.sol-grid,.two-col,.mosaic{grid-template-columns:1fr}
+  .mtile.tall,.mtile.med{height:280px}
+  .sol-card{height:320px}
+  .hero-stats{flex-direction:column;gap:16px}
+  .hstat{border-right:none;padding-right:0;border-bottom:1px solid rgba(255,255,255,.07);padding-bottom:16px}
+  .nav-links{display:none}
+  footer{grid-template-columns:1fr}
+  .top-banner-links{gap:4px}
+}
+</style>
+</head>
+<body>
+
+<!-- TOP BANNER: group project nav -->
+<div class="top-banner">
+  <span class="top-banner-label">Ecological Crisis Project</span>
+  <div class="top-banner-links">
+    <a href="#" class="active">Water Contamination</a>
+    <a href="#">Water &amp; Sewage Infrastructure</a>
+    <a href="#">Air Pollution</a>
+    <a href="#">AI &amp; Data Centers</a>
+    <a href="#">Home</a>
+  </div>
+</div>
+
+<!-- MAIN NAV -->
+<nav>
+  <a class="nav-logo" href="#">Water Contamination</a>
+  <ul class="nav-links">
+    <li><a href="#impact">Impact</a></li>
+    <li><a href="#causes">Causes</a></li>
+    <li><a href="#gap">Access Gap</a></li>
+    <li><a href="#solutions">Solutions</a></li>
+    <li><a href="#works-cited">Sources</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg" id="heroBg"></div>
+  <div class="hero-ov"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Global Health Crisis</div>
+    <div class="hero-byline">Peyton Yang &nbsp;|&nbsp; Mrs. Mulrine &nbsp;|&nbsp; English I Honors &nbsp;|&nbsp; 26 May 2026</div>
+    <h1>Water Contamination<br>and the Need for<br><strong>Global Solutions</strong></h1>
+    <p class="hero-sub">Billions of people drink water contaminated by chemicals, pathogens, and toxic waste every day. One in four people worldwide cannot access safely managed drinking water.</p>
+    <div class="hero-stats">
+      <div class="hstat">
+        <div class="hstat-n">2.1<sup>B</sup></div>
+        <div class="hstat-l">people without safely managed drinking water</div>
+        <span class="hstat-src">WHO, 2023</span>
+      </div>
+      <div class="hstat">
+        <div class="hstat-n">505<sup>K</sup></div>
+        <div class="hstat-l">diarrhoeal deaths per year from unsafe water</div>
+        <span class="hstat-src">WHO, 2023</span>
+      </div>
+      <div class="hstat">
+        <div class="hstat-n">$3.3<sup>B</sup></div>
+        <div class="hstat-l">annual healthcare cost from waterborne disease in the U.S. alone</div>
+        <span class="hstat-src">CDC MMWR, 2024</span>
+      </div>
+    </div>
+  </div>
+  <div class="hero-img-credit">Photo: <a href="https://unsplash.com/photos/1541675154750" target="_blank">Unsplash / Unknown</a> &mdash; Unsplash License</div>
+</section>
+
+<!-- PARALLAX BAND 1 -->
+<div class="pband">
+  <div class="pband-inner" id="band1" style="background-image:url('https://images.unsplash.com/photo-1559825481-12a05cc00344?w=1600&q=80')"></div>
+  <div class="pband-ov" style="background:rgba(7,17,30,.58)">
+    <p class="pband-quote rv">"Microbiologically contaminated drinking water can transmit cholera, dysentery, typhoid, and polio."</p>
+    <span class="pband-attr rv d1">World Health Organization, Drinking Water Fact Sheet, 2023</span>
+  </div>
+  <div class="pband-imgcredit">Photo: <a href="https://unsplash.com/photos/1559825481" target="_blank">Unsplash</a> &mdash; Unsplash License</div>
+</div>
+
+<!-- IMPACT SECTION -->
+<section class="section" id="impact" style="background:var(--warm)">
+  <div class="sl">The Numbers</div>
+  <h2 class="rv">A crisis affecting every nation</h2>
+  <p class="intro rv d1">These figures come from peer-reviewed CDC surveillance data and WHO global estimates.</p>
+
+  <!-- Big stat boxes -->
+  <div class="bigstat-grid rv d1">
+    <div class="bigstat">
+      <div class="bigstat-n">7.2M</div>
+      <div class="bigstat-l">waterborne illness cases per year in the United States</div>
+      <span class="bigstat-s">CDC / Gerdes et al., Emerging Infectious Diseases, 2023</span>
+    </div>
+    <div class="bigstat">
+      <div class="bigstat-n">120K</div>
+      <div class="bigstat-l">hospitalizations from waterborne pathogens in the U.S. annually</div>
+      <span class="bigstat-s">CDC / Gerdes et al., Emerging Infectious Diseases, 2023</span>
+    </div>
+    <div class="bigstat">
+      <div class="bigstat-n">6,630</div>
+      <div class="bigstat-l">deaths per year from waterborne disease in the U.S. alone</div>
+      <span class="bigstat-s">CDC / Gerdes et al., Emerging Infectious Diseases, 2023</span>
+    </div>
+  </div>
+  <div class="bigstat-wide rv d2">
+    <div class="bigstat-wide-n">1.4M</div>
+    <div class="bigstat-wide-l">lives per year that improved water, sanitation, and hygiene could prevent globally &nbsp;&mdash;&nbsp; <span style="color:rgba(255,255,255,.3);font-size:11px">WHO, 2023</span></div>
+  </div>
+
+  <!-- SVG Donut chart: global population water access -->
+  <div style="margin-top:52px" class="two-col rv">
+    <div>
+      <div class="chart-wrap">
+        <div class="chart-title">Global Population by Drinking Water Service Level (2022)</div>
+        <div class="donut-wrap">
+          <svg width="160" height="160" viewBox="0 0 160 160" id="donutSvg">
+            <!-- segments drawn by JS -->
+          </svg>
+          <div class="donut-legend">
+            <div class="legend-row"><div class="legend-swatch" style="background:#0c9b7c"></div>Safely managed (73%)</div>
+            <div class="legend-row"><div class="legend-swatch" style="background:#1565a8"></div>Basic service (14%)</div>
+            <div class="legend-row"><div class="legend-swatch" style="background:#d4a017"></div>Limited service (5%)</div>
+            <div class="legend-row"><div class="legend-swatch" style="background:#e05c2e"></div>Unimproved (5%)</div>
+            <div class="legend-row"><div class="legend-swatch" style="background:#c0392b"></div>Surface water (3%)</div>
+          </div>
+        </div>
+        <p class="chart-source">Source: WHO/UNICEF JMP, 2025 &mdash; processed by Our World in Data</p>
+      </div>
+    </div>
+    <div>
+      <div class="chart-wrap" style="height:100%">
+        <div class="chart-title">U.S. Waterborne Disease Burden vs. Other Preventable Causes (Annual Deaths)</div>
+        <!-- Horizontal bar comparison -->
+        <div style="display:flex;flex-direction:column;gap:14px;margin-top:8px" id="usBarChart">
+          <div>
+            <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-bottom:5px"><span>Waterborne disease</span><span style="font-weight:500;color:var(--text)">6,630</span></div>
+            <div class="hbar-track"><div class="hbar-fill" style="background:var(--red)" data-w="66"></div></div>
+          </div>
+          <div>
+            <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-bottom:5px"><span>Influenza &amp; pneumonia</span><span style="font-weight:500;color:var(--text)">~53,000</span></div>
+            <div class="hbar-track"><div class="hbar-fill" style="background:var(--muted)" data-w="100"></div></div>
+          </div>
+          <div>
+            <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-bottom:5px"><span>Food-borne illness</span><span style="font-weight:500;color:var(--text)">~3,000</span></div>
+            <div class="hbar-track"><div class="hbar-fill" style="background:var(--muted)" data-w="30"></div></div>
+          </div>
+        </div>
+        <p style="font-size:12px;color:var(--muted);margin-top:18px;line-height:1.7;font-weight:300">Waterborne disease kills more Americans each year than food-borne illness, yet receives far less public attention or dedicated funding.</p>
+        <p class="chart-source">Sources: CDC Waterborne Disease Surveillance, 2021; CDC MMWR, 2024; CDC National Center for Health Statistics</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CAUSES SECTION -->
+<section class="section" id="causes" style="background:var(--navy);color:#fff">
+  <div class="sl">Root Causes</div>
+  <h2 class="rv" style="color:#fff">How water becomes contaminated</h2>
+  <p class="intro rv d1" style="color:rgba(255,255,255,.4)">Four primary pathways introduce harmful pathogens and chemicals into drinking water supplies worldwide.</p>
+
+  <div class="mosaic rv">
+    <div style="display:grid;gap:3px">
+      <div class="mtile tall">
+        <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=900&q=80" alt="Agricultural fields with crop rows" loading="lazy">
+        <div class="mtile-credit"><a href="https://unsplash.com/photos/1500382017468" target="_blank">Unsplash</a> License</div>
+        <div class="mtile-body">
+          <div class="mtile-num">01</div>
+          <div class="mtile-title">Agricultural Runoff</div>
+          <div class="mtile-desc">Fertilizers, pesticides, and animal waste leach nitrates and pathogens into groundwater. Researchers have linked nitrate contamination to methemoglobinemia in infants and elevated cancer risk in adults.</div>
+        </div>
+      </div>
+    </div>
+    <div style="display:grid;gap:3px">
+      <div class="mtile med">
+        <img src="https://images.unsplash.com/photo-1567427018141-0584cfcbf1b8?w=900&q=80" alt="Industrial smokestacks emitting pollution" loading="lazy">
+        <div class="mtile-credit"><a href="https://unsplash.com/photos/1567427018141" target="_blank">Unsplash</a> License</div>
+        <div class="mtile-body">
+          <div class="mtile-num">02</div>
+          <div class="mtile-title">Industrial Discharge</div>
+          <div class="mtile-desc">Heavy metals, solvents, and toxic byproducts from manufacturing and mining enter waterways through inadequate disposal or accidental spills.</div>
+        </div>
+      </div>
+      <div class="mtile med">
+        <img src="https://images.unsplash.com/photo-1611273426858-450d8e3c9fce?w=900&q=80" alt="Sewage pipe discharging into water" loading="lazy">
+        <div class="mtile-credit"><a href="https://unsplash.com/photos/1611273426858" target="_blank">Unsplash</a> License</div>
+        <div class="mtile-body">
+          <div class="mtile-num">03</div>
+          <div class="mtile-title">Untreated Sewage</div>
+          <div class="mtile-desc">Where wastewater treatment is absent, raw sewage flows directly into rivers and aquifers, introducing E. coli, cholera, and typhoid pathogens.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cause 4 full-width -->
+  <div class="mtile rv" style="height:260px;margin-top:3px;border-radius:0 0 4px 4px">
+    <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1600&q=80" alt="Old corroding water pipe infrastructure" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;filter:brightness(.5) saturate(.8)">
+    <div class="mtile-credit"><a href="https://unsplash.com/photos/1558618666" target="_blank">Unsplash</a> License</div>
+    <div class="mtile-body">
+      <div class="mtile-num">04</div>
+      <div class="mtile-title">Aging Infrastructure</div>
+      <div class="mtile-desc">Corroding pipes leach lead and other contaminants into tap water. From 2014 to 2019, Flint, Michigan exposed more than 100,000 residents to elevated lead levels through failed municipal pipes.</div>
+    </div>
+  </div>
+
+  <!-- Pathogen icon infographic -->
+  <div style="margin-top:52px">
+    <div class="sl" style="margin-bottom:16px">Key Pathogens Transmitted Through Contaminated Water</div>
+    <div class="icon-grid rv d1">
+      <div class="icon-card">
+        <svg class="icon-svg" viewBox="0 0 40 40" fill="none">
+          <circle cx="20" cy="20" r="12" stroke="#0c9b7c" stroke-width="1.5"/>
+          <circle cx="20" cy="20" r="6" fill="rgba(12,155,124,.2)"/>
+          <line x1="20" y1="2" x2="20" y2="8" stroke="#0c9b7c" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="20" y1="32" x2="20" y2="38" stroke="#0c9b7c" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="2" y1="20" x2="8" y2="20" stroke="#0c9b7c" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="32" y1="20" x2="38" y2="20" stroke="#0c9b7c" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+        <div class="icon-card-n" style="color:var(--teal)">Cholera</div>
+        <div class="icon-card-l">Vibrio cholerae; causes severe dehydration and can kill within hours if untreated</div>
+      </div>
+      <div class="icon-card">
+        <svg class="icon-svg" viewBox="0 0 40 40" fill="none">
+          <rect x="8" y="8" width="24" height="24" rx="4" stroke="#e05c2e" stroke-width="1.5"/>
+          <path d="M14 20h12M20 14v12" stroke="#e05c2e" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+        <div class="icon-card-n" style="color:var(--orange)">Typhoid</div>
+        <div class="icon-card-l">Salmonella typhi; kills 110,000&ndash;215,000 people globally per year</div>
+      </div>
+      <div class="icon-card">
+        <svg class="icon-svg" viewBox="0 0 40 40" fill="none">
+          <polygon points="20,4 36,32 4,32" stroke="#d4a017" stroke-width="1.5" fill="none"/>
+          <line x1="20" y1="14" x2="20" y2="24" stroke="#d4a017" stroke-width="1.5" stroke-linecap="round"/>
+          <circle cx="20" cy="28" r="1.5" fill="#d4a017"/>
+        </svg>
+        <div class="icon-card-n" style="color:var(--gold)">E. coli</div>
+        <div class="icon-card-l">Fecal coliform bacteria; a primary indicator of sewage contamination in water tests</div>
+      </div>
+      <div class="icon-card">
+        <svg class="icon-svg" viewBox="0 0 40 40" fill="none">
+          <circle cx="20" cy="20" r="14" stroke="#c0392b" stroke-width="1.5"/>
+          <path d="M20 12 C24 16 24 24 20 28 C16 24 16 16 20 12Z" fill="rgba(192,57,43,.25)" stroke="#c0392b" stroke-width="1"/>
+        </svg>
+        <div class="icon-card-n" style="color:var(--red)">Cryptosporidium</div>
+        <div class="icon-card-l">Chlorine-resistant parasite; causes over 748,000 cases in the U.S. annually</div>
+      </div>
+    </div>
+    <p style="font-size:10px;color:rgba(255,255,255,.2);margin-top:10px;font-style:italic">Sources: WHO Drinking Water Fact Sheet, 2023; CDC About Drinking Water, 2025</p>
+  </div>
+</section>
+
+<!-- PARALLAX BAND 2 -->
+<div class="pband">
+  <div class="pband-inner" id="band2" style="background-image:url('https://images.unsplash.com/photo-1594398901394-4e34939a4fd0?w=1600&q=80');background-position:center 30%"></div>
+  <div class="pband-ov" style="background:rgba(7,17,30,.6)">
+    <p class="pband-quote rv">In 2022, only 73% of the global population used a safely managed drinking water service.</p>
+    <span class="pband-attr rv d1">WHO/UNICEF Joint Monitoring Programme, 2025</span>
+  </div>
+  <div class="pband-imgcredit">Photo: <a href="https://unsplash.com/photos/1594398901394" target="_blank">Unsplash</a> &mdash; Unsplash License</div>
+</div>
+
+<!-- ACCESS GAP SECTION -->
+<section class="section" id="gap" style="background:var(--cream)">
+  <div class="sl">Urban vs. Rural</div>
+  <h2 class="rv">The persistent access divide</h2>
+  <p class="intro rv d1">In every world region, rural populations trail urban ones in access to safely managed drinking water. The gap reaches its widest in Sub-Saharan Africa.</p>
+
+  <div class="two-col">
+    <div class="rl">
+      <div class="chart-wrap">
+        <div class="chart-title">Share Using Safely Managed Drinking Water, 2022 (Urban vs. Rural)</div>
+        <div id="barChart">
+          <div class="hbar-row">
+            <div class="hbar-label">Ethiopia</div>
+            <div class="hbar-track-wrap">
+              <div class="hbar-track"><div class="hbar-fill u" data-w="42"></div></div>
+              <div class="hbar-track"><div class="hbar-fill r" data-w="7"></div></div>
+            </div>
+            <div class="hbar-pcts"><div class="hbar-pct u">42%</div><div class="hbar-pct r">7%</div></div>
+          </div>
+          <div class="hbar-row">
+            <div class="hbar-label">Nigeria</div>
+            <div class="hbar-track-wrap">
+              <div class="hbar-track"><div class="hbar-fill u" data-w="26"></div></div>
+              <div class="hbar-track"><div class="hbar-fill r" data-w="8"></div></div>
+            </div>
+            <div class="hbar-pcts"><div class="hbar-pct u">26%</div><div class="hbar-pct r">8%</div></div>
+          </div>
+          <div class="hbar-row">
+            <div class="hbar-label">Bangladesh</div>
+            <div class="hbar-track-wrap">
+              <div class="hbar-track"><div class="hbar-fill u" data-w="58"></div></div>
+              <div class="hbar-track"><div class="hbar-fill r" data-w="62"></div></div>
+            </div>
+            <div class="hbar-pcts"><div class="hbar-pct u">58%</div><div class="hbar-pct r">62%</div></div>
+          </div>
+          <div class="hbar-row">
+            <div class="hbar-label">India</div>
+            <div class="hbar-track-wrap">
+              <div class="hbar-track"><div class="hbar-fill u" data-w="62"></div></div>
+              <div class="hbar-track"><div class="hbar-fill r" data-w="28"></div></div>
+            </div>
+            <div class="hbar-pcts"><div class="hbar-pct u">62%</div><div class="hbar-pct r">28%</div></div>
+          </div>
+          <div class="hbar-row">
+            <div class="hbar-label">Brazil</div>
+            <div class="hbar-track-wrap">
+              <div class="hbar-track"><div class="hbar-fill u" data-w="78"></div></div>
+              <div class="hbar-track"><div class="hbar-fill r" data-w="16"></div></div>
+            </div>
+            <div class="hbar-pcts"><div class="hbar-pct u">78%</div><div class="hbar-pct r">16%</div></div>
+          </div>
+          <div class="hbar-row">
+            <div class="hbar-label">Germany</div>
+            <div class="hbar-track-wrap">
+              <div class="hbar-track"><div class="hbar-fill u" data-w="99"></div></div>
+              <div class="hbar-track"><div class="hbar-fill r" data-w="96"></div></div>
+            </div>
+            <div class="hbar-pcts"><div class="hbar-pct u">99%</div><div class="hbar-pct r">96%</div></div>
+          </div>
+        </div>
+        <div class="hbar-leg">
+          <div class="hleg"><div class="hleg-dot" style="background:var(--blue)"></div>Urban</div>
+          <div class="hleg"><div class="hleg-dot" style="background:var(--teal)"></div>Rural</div>
+        </div>
+        <p class="chart-source">Source: WHO/UNICEF JMP, 2025 &mdash; processed by Our World in Data</p>
+      </div>
+
+      <!-- Regional summary infographic -->
+      <div class="chart-wrap rv d2" style="margin-top:0">
+        <div class="chart-title">Average Urban-Rural Gap by Region (percentage points, 2022)</div>
+        <svg width="100%" height="160" viewBox="0 0 340 160" id="gapSvg" style="display:block">
+          <!-- bars drawn inline -->
+          <!-- Sub-Saharan Africa: ~35pp gap -->
+          <rect x="10" y="20" width="180" height="22" rx="3" fill="#c0392b" opacity=".85"/>
+          <text x="196" y="36" font-size="11" fill="#3a3f4c" font-family="Outfit,sans-serif">Sub-Saharan Africa</text>
+          <text x="4" y="36" font-size="10" fill="#fff" text-anchor="end" font-family="Outfit,sans-serif">35pp</text>
+          <!-- South Asia: ~28pp -->
+          <rect x="10" y="52" width="144" height="22" rx="3" fill="#e05c2e" opacity=".85"/>
+          <text x="160" y="68" font-size="11" fill="#3a3f4c" font-family="Outfit,sans-serif">South Asia</text>
+          <text x="4" y="68" font-size="10" fill="#fff" text-anchor="end" font-family="Outfit,sans-serif">28pp</text>
+          <!-- Latin America: ~18pp -->
+          <rect x="10" y="84" width="90" height="22" rx="3" fill="#d4a017" opacity=".85"/>
+          <text x="106" y="100" font-size="11" fill="#3a3f4c" font-family="Outfit,sans-serif">Latin America</text>
+          <text x="4" y="100" font-size="10" fill="#fff" text-anchor="end" font-family="Outfit,sans-serif">18pp</text>
+          <!-- East Asia: ~10pp -->
+          <rect x="10" y="116" width="50" height="22" rx="3" fill="#1565a8" opacity=".85"/>
+          <text x="66" y="132" font-size="11" fill="#3a3f4c" font-family="Outfit,sans-serif">East Asia &amp; Pacific</text>
+          <text x="4" y="132" font-size="10" fill="#fff" text-anchor="end" font-family="Outfit,sans-serif">10pp</text>
+        </svg>
+        <p class="chart-source">Source: WHO/UNICEF JMP, 2025. pp = percentage points.</p>
+      </div>
+    </div>
+
+    <div class="rr">
+      <div style="display:grid;gap:3px">
+        <div class="mtile" style="height:340px">
+          <img src="https://images.unsplash.com/photo-1591088398332-8a7791972843?w=900&q=80" alt="Woman carrying water container in rural area" loading="lazy">
+          <div class="mtile-credit"><a href="https://unsplash.com/photos/1591088398332" target="_blank">Unsplash</a> License</div>
+          <div class="mtile-body">
+            <div class="mtile-title">Rural burden</div>
+            <div class="mtile-desc">Women and girls in rural communities travel hours each day to collect water from unsafe sources, limiting time for education and work.</div>
+          </div>
+        </div>
+        <div class="mtile" style="height:240px">
+          <img src="https://images.unsplash.com/photo-1523741543316-beb7fc7023d8?w=700&q=80" alt="Urban water treatment infrastructure" loading="lazy">
+          <div class="mtile-credit"><a href="https://unsplash.com/photos/1523741543316" target="_blank">Unsplash</a> License</div>
+          <div class="mtile-body">
+            <div class="mtile-title">Urban access</div>
+            <div class="mtile-desc">Cities typically invest in centralized treatment infrastructure; rural areas rarely receive the same funding or technical capacity.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOLUTIONS SECTION -->
+<section class="section" id="solutions" style="background:var(--warm)">
+  <div class="sl">Pathways Forward</div>
+  <h2 class="rv">Three pillars of a global response</h2>
+  <p class="intro rv d1">The WHO and UNICEF have identified proven strategies that, when implemented together, can significantly reduce water contamination's toll on human health.</p>
+  <div class="sol-grid rv">
+    <div class="sol-card">
+      <img src="https://images.unsplash.com/photo-1535007813679-3a61ef26c2c1?w=800&q=80" alt="Water treatment filtration facility" loading="lazy">
+      <div class="sol-credit"><a href="https://unsplash.com/photos/1535007813679" target="_blank">Unsplash</a> License</div>
+      <div class="sol-body">
+        <div class="sol-n">01</div>
+        <div class="sol-title">Water Treatment Systems</div>
+        <div class="sol-desc">Point-of-use and community-scale filtration actively remove pathogens and chemical contaminants before water reaches households. The WHO has evaluated and certified these technologies since 2014.</div>
+        <span class="sol-tag">Technology</span>
+      </div>
+    </div>
+    <div class="sol-card">
+      <img src="https://images.unsplash.com/photo-1581093577421-f561a654a353?w=800&q=80" alt="Water quality testing equipment in lab" loading="lazy">
+      <div class="sol-credit"><a href="https://unsplash.com/photos/1581093577421" target="_blank">Unsplash</a> License</div>
+      <div class="sol-body">
+        <div class="sol-n">02</div>
+        <div class="sol-title">Quality Monitoring Networks</div>
+        <div class="sol-desc">Real-time sensor networks detect contamination events before they become outbreaks. National programs that report to international bodies create accountability and enable rapid response.</div>
+        <span class="sol-tag">Infrastructure</span>
+      </div>
+    </div>
+    <div class="sol-card">
+      <img src="https://images.unsplash.com/photo-1517048676732-d65bc937f952?w=800&q=80" alt="International policy and cooperation" loading="lazy">
+      <div class="sol-credit"><a href="https://unsplash.com/photos/1517048676732" target="_blank">Unsplash</a> License</div>
+      <div class="sol-body">
+        <div class="sol-n">03</div>
+        <div class="sol-title">Global Regulatory Frameworks</div>
+        <div class="sol-desc">The WHO's Guidelines for Drinking-water Quality offer science-based standards countries can adopt into national law. UN Resolution 64/292 formally recognizes safe water as a universal human right.</div>
+        <span class="sol-tag">Policy</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cost vs. benefit infographic -->
+  <div class="chart-wrap rv" style="margin-top:48px;max-width:760px">
+    <div class="chart-title">Every $1 Invested in Safe Water &amp; Sanitation Returns (WHO Estimate)</div>
+    <div style="display:flex;align-items:center;gap:24px;padding:8px 0">
+      <div style="font-family:'Cormorant Garamond',serif;font-size:5rem;font-weight:600;color:var(--teal);line-height:1">$5</div>
+      <div style="font-size:15px;color:var(--muted);font-weight:300;line-height:1.7;max-width:480px">in economic benefit through reduced healthcare costs, increased worker productivity, and fewer school days lost to preventable illness. Preventing outbreaks costs far less than treating them.</div>
+    </div>
+    <p class="chart-source">Source: WHO, "Drinking-Water," Fact Sheet, 13 Sept. 2023</p>
+  </div>
+</section>
+
+<!-- CLOSING -->
+<div class="closing">
+  <div class="closing-inner" id="closingBand" style="background-image:url('https://images.unsplash.com/photo-1504386106331-3e4e71712b38?w=1800&q=80')"></div>
+  <div class="closing-ov">
+    <h2 class="closing-title rv">Safe water is not a privilege.<br><em>It is a right.</em></h2>
+    <p class="closing-sub rv d1">The evidence is clear and the solutions are proven. What remains is the political will and global investment to deliver safely managed water to all 8 billion people on Earth.</p>
+    <div class="btn-row rv d2">
+      <a href="https://www.who.int/news-room/fact-sheets/detail/drinking-water" target="_blank" class="btn-p">WHO Drinking Water Facts</a>
+      <a href="https://washdata.org" target="_blank" class="btn-s">Explore JMP Data</a>
+    </div>
+  </div>
+  <div class="closing-credit">Photo: <a href="https://unsplash.com/photos/1504386106331" target="_blank">Unsplash</a> &mdash; Unsplash License</div>
+</div>
+
+<!-- WORKS CITED -->
+<section class="wc-section" id="works-cited">
+  <div class="sl">Documentation</div>
+  <h2 class="rv" style="margin-bottom:12px">Works Cited</h2>
+  <p class="wc-sub rv d1">All text citations follow MLA 9th edition format. Image credits appear inline throughout the page. All Unsplash images are published under the <a href="https://unsplash.com/license" target="_blank" style="color:var(--teal)">Unsplash License</a> (free for commercial and noncommercial use; no attribution legally required, credited here for academic integrity).</p>
+  <ol class="wc-list rv d2">
+    <li>"About Drinking Water." <em>Centers for Disease Control and Prevention</em>, 30 Jan. 2025, <a href="https://www.cdc.gov/drinking-water/about/index.html" target="_blank">https://www.cdc.gov/drinking-water/about/index.html</a>. Accessed 26 May 2026.</li>
+    <li>"Drinking-Water." <em>World Health Organization</em>, 13 Sept. 2023, <a href="https://www.who.int/news-room/fact-sheets/detail/drinking-water" target="_blank">https://www.who.int/news-room/fact-sheets/detail/drinking-water</a>. Accessed 26 May 2026.</li>
+    <li>Gerdes, Megan E., et al. "Estimating Waterborne Infectious Disease Burden by Exposure Route, United States, 2014." <em>Emerging Infectious Diseases</em>, vol. 29, no. 7, July 2023, <a href="https://wwwnc.cdc.gov/eid/article/29/7/23-0231_article" target="_blank">https://wwwnc.cdc.gov/eid/article/29/7/23-0231_article</a>. Accessed 26 May 2026.</li>
+    <li>H, Lawinger, et al. "2021 Waterborne Disease Outbreaks in the United States." <em>Centers for Disease Control and Prevention</em>, 2023, <a href="https://www.cdc.gov/healthy-water-data/media/pdfs/2024/04/2021_Annual_Waterborne_Disease_Surveillance_Report.pdf" target="_blank">https://www.cdc.gov/healthy-water-data/media/pdfs/2024/04/2021_Annual_Waterborne_Disease_Surveillance_Report.pdf</a>. Accessed 26 May 2026.</li>
+    <li>"Surveillance of Waterborne Disease Outbreaks Associated with Drinking Water, United States, 2015&ndash;2020." <em>Morbidity and Mortality Weekly Report</em>, Centers for Disease Control and Prevention, 2024, <a href="https://www.cdc.gov/mmwr/volumes/73/ss/ss7301a1.htm" target="_blank">https://www.cdc.gov/mmwr/volumes/73/ss/ss7301a1.htm</a>. Accessed 26 May 2026.</li>
+    <li>"Urban vs. Rural Safely Managed Drinking Water Source." <em>Our World in Data</em>, WHO/UNICEF Joint Monitoring Programme, 2025, <a href="https://ourworldindata.org/grapher/urban-vs-rural-safely-managed-drinking-water-source" target="_blank">https://ourworldindata.org/grapher/urban-vs-rural-safely-managed-drinking-water-source</a>. Accessed 30 May 2026.</li>
+    <li>"Water." <em>United Nations</em>, n.d., <a href="https://www.un.org/en/global-issues/water" target="_blank">https://www.un.org/en/global-issues/water</a>. Accessed 30 May 2026.</li>
+    <li>"What Causes Tap Water Contamination." <em>Centers for Disease Control and Prevention</em>, 31 July 2024, <a href="https://www.cdc.gov/drinking-water/causes/index.html" target="_blank">https://www.cdc.gov/drinking-water/causes/index.html</a>. Accessed 26 May 2026.</li>
+    <li>"WHO Water, Sanitation, Hygiene and Waste Strategy 2026&ndash;2035." <em>World Health Organization</em>, 2025, <a href="https://www.who.int/publications/i/item/B09661" target="_blank">https://www.who.int/publications/i/item/B09661</a>. Accessed 30 May 2026.</li>
+  </ol>
+  <div style="margin-top:40px;padding-top:28px;border-top:1px solid var(--border)">
+    <div class="sl" style="margin-bottom:14px">Image Credits</div>
+    <ol class="wc-list rv" style="margin-top:0">
+      <li>Hero image. <em>Unsplash</em>, photo ID 1541675154750-0444c7d51e8e, <a href="https://unsplash.com/photos/1541675154750" target="_blank">https://unsplash.com</a>. Unsplash License. Accessed 1 June 2026.</li>
+      <li>Parallax band 1 (water supply). <em>Unsplash</em>, photo ID 1559825481-12a05cc00344, <a href="https://unsplash.com/photos/1559825481" target="_blank">https://unsplash.com</a>. Unsplash License. Accessed 1 June 2026.</li>
+      <li>Agricultural runoff / farm fields. <em>Unsplash</em>, photo by James Baltz, ID 1500382017468-9049fed747ef, <a href="https://unsplash.com/photos/1500382017468" target="_blank">https://unsplash.com</a>. Unsplash License. Accessed 1 June 2026.</li>
+      <li>Industrial smokestacks. <em>Unsplash</em>, photo ID 1567427018141-0584cfcbf1b8, <a href="https://unsplash.com/photos/1567427018141" target="_blank">https://unsplash.com</a>. Unsplash License. Accessed 1 June 2026.</li>
+      <li>Sewage / water discharge. <em>Unsplash</em>, photo ID 1611273426858-450d8e3c9fce, <a href="https://unsplash.com/photos/1611273426858" target="_blank">https://unsplash.com</a>. Unsplash License. Accessed 1 June 2026.</li>
+      <li>Aging pipe infrastructure. <em>Unsplash</em>, photo ID 1558618666-fcd25c85cd64, <a href="https://unsplash.com/photos/1558618666" target="_blank">https://unsplash.com</a>. Unsplash License. Accessed 1 June 2026.</li>
+      <li>Parallax band 2 / child with water. <em>Unsplash</em>, photo ID 1594398901394-4e34939a4fd0, <a href="https://unsplash.com/photos/1594398901394" target="_blank">https://unsplash.com</a>. Unsplash License. Accessed 1 June 2026.</li>
+      <li>Rural woman carrying water. <em>Unsplash</em>, photo ID 1591088398332-8a7791972843, <a href="https://unsplash.com/photos/1591088398332" target="_blank">https://unsplash.com</a>. Unsplash License. Accessed 1 June 2026.</li>
+      <li>Urban water infrastructure. <em>Unsplash</em>, photo ID 1523741543316-beb7fc7023d8, <a href="https://unsplash.com/photos/1523741543316" target="_blank">https://unsplash.com</a>. Unsplash License. Accessed 1 June 2026.</li>
+      <li>Water treatment facility. <em>Unsplash</em>, photo ID 1535007813679-3a61ef26c2c1, <a href="https://unsplash.com/photos/1535007813679" target="_blank">https://unsplash.com</a>. Unsplash License. Accessed 1 June 2026.</li>
+      <li>Water quality lab / testing. <em>Unsplash</em>, photo ID 1581093577421-f561a654a353, <a href="https://unsplash.com/photos/1581093577421" target="_blank">https://unsplash.com</a>. Unsplash License. Accessed 1 June 2026.</li>
+      <li>International cooperation. <em>Unsplash</em>, photo ID 1517048676732-d65bc937f952, <a href="https://unsplash.com/photos/1517048676732" target="_blank">https://unsplash.com</a>. Unsplash License. Accessed 1 June 2026.</li>
+      <li>Closing / water landscape. <em>Unsplash</em>, photo ID 1504386106331-3e4e71712b38, <a href="https://unsplash.com/photos/1504386106331" target="_blank">https://unsplash.com</a>. Unsplash License. Accessed 1 June 2026.</li>
+    </ol>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="ft-brand">
+    <span class="nav-logo" style="color:rgba(255,255,255,.45);font-family:'Cormorant Garamond',serif;font-size:17px">Water &amp; Global Health</span>
+    <p>Part of the Ecological Crisis Group Project. Page by Peyton Yang &mdash; English I Honors, 2026. Data from WHO, CDC, and Our World in Data.</p>
+  </div>
+  <div class="ft-links">
+    <h4>Other pages in this project</h4>
+    <ul>
+      <li><a href="#">Water &amp; Sewage Infrastructure</a></li>
+      <li><a href="#">Air Pollution</a></li>
+      <li><a href="#">AI &amp; Data Centers</a></li>
+      <li><a href="#">Project Home</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>
+// Reveal on scroll
+const all = document.querySelectorAll('.rv,.rl,.rr');
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('on'); });
+}, { threshold: 0.1 });
+all.forEach(el => obs.observe(el));
+
+// Hero Ken Burns
+window.addEventListener('load', () => {
+  const bg = document.getElementById('heroBg');
+  if(bg) bg.classList.add('loaded');
+});
+
+// Parallax
+const pbands = [
+  {el: document.getElementById('band1'), spd: 0.32},
+  {el: document.getElementById('band2'), spd: 0.3},
+  {el: document.getElementById('closingBand'), spd: 0.28},
+];
+function doParallax() {
+  pbands.forEach(({el, spd}) => {
+    if(!el) return;
+    const rect = el.parentElement.getBoundingClientRect();
+    const offset = (rect.top + rect.height / 2) * spd;
+    el.style.transform = `translateY(${offset}px)`;
+  });
+}
+window.addEventListener('scroll', doParallax, {passive:true});
+doParallax();
+
+// Animated bar charts
+let barsAnimated = false;
+const barObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if(e.isIntersecting && !barsAnimated) {
+      barsAnimated = true;
+      document.querySelectorAll('.hbar-fill').forEach(b => { b.style.width = b.dataset.w + '%'; });
+    }
+  });
+}, { threshold: 0.25 });
+const bc = document.getElementById('barChart');
+if(bc) barObs.observe(bc);
+
+// Animate US comparison bars too
+let usBarsAnimated = false;
+const usObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if(e.isIntersecting && !usBarsAnimated) {
+      usBarsAnimated = true;
+      document.querySelectorAll('#usBarChart .hbar-fill').forEach(b => { b.style.width = b.dataset.w + '%'; });
+    }
+  });
+}, { threshold: 0.25 });
+const ubc = document.getElementById('usBarChart');
+if(ubc) usObs.observe(ubc);
+
+// Donut chart (SVG)
+function drawDonut(svgId, segments, cx, cy, r, strokeW) {
+  const svg = document.getElementById(svgId);
+  if(!svg) return;
+  let cumAngle = -Math.PI / 2;
+  const gap = 0.03;
+  segments.forEach(seg => {
+    const angle = (seg.pct / 100) * Math.PI * 2 - gap;
+    const x1 = cx + r * Math.cos(cumAngle);
+    const y1 = cy + r * Math.sin(cumAngle);
+    const x2 = cx + r * Math.cos(cumAngle + angle);
+    const y2 = cy + r * Math.sin(cumAngle + angle);
+    const large = angle > Math.PI ? 1 : 0;
+    const path = document.createElementNS('http://www.w3.org/2000/svg','path');
+    path.setAttribute('d', `M ${x1} ${y1} A ${r} ${r} 0 ${large} 1 ${x2} ${y2}`);
+    path.setAttribute('stroke', seg.color);
+    path.setAttribute('stroke-width', strokeW);
+    path.setAttribute('fill', 'none');
+    path.setAttribute('stroke-linecap', 'round');
+    svg.appendChild(path);
+    cumAngle += angle + gap;
+  });
+  // Center label
+  const t1 = document.createElementNS('http://www.w3.org/2000/svg','text');
+  t1.setAttribute('x', cx); t1.setAttribute('y', cy - 4);
+  t1.setAttribute('text-anchor','middle'); t1.setAttribute('font-size','22');
+  t1.setAttribute('font-weight','600'); t1.setAttribute('fill','#18202c');
+  t1.setAttribute('font-family','Cormorant Garamond, serif');
+  t1.textContent = '73%';
+  svg.appendChild(t1);
+  const t2 = document.createElementNS('http://www.w3.org/2000/svg','text');
+  t2.setAttribute('x', cx); t2.setAttribute('y', cy + 12);
+  t2.setAttribute('text-anchor','middle'); t2.setAttribute('font-size','9');
+  t2.setAttribute('fill','#5c6472'); t2.setAttribute('font-family','Outfit,sans-serif');
+  t2.textContent = 'safely managed';
+  svg.appendChild(t2);
+}
+drawDonut('donutSvg', [
+  {pct:73, color:'#0c9b7c'},
+  {pct:14, color:'#1565a8'},
+  {pct:5,  color:'#d4a017'},
+  {pct:5,  color:'#e05c2e'},
+  {pct:3,  color:'#c0392b'},
+], 80, 80, 56, 18);
+
+// Nav active highlight
+const navLinks = document.querySelectorAll('.nav-links a');
+const sectionEls = document.querySelectorAll('section[id]');
+const navHlObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if(e.isIntersecting) {
+      navLinks.forEach(a => {
+        a.style.color = a.getAttribute('href') === '#' + e.target.id
+          ? 'rgba(12,155,124,1)' : 'rgba(255,255,255,.5)';
+      });
+    }
+  });
+}, { rootMargin: '-40% 0px -55% 0px' });
+sectionEls.forEach(s => navHlObs.observe(s));
+</script>
+</body>
+</html>
